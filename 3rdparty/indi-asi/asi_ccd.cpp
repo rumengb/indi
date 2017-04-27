@@ -1049,7 +1049,7 @@ void ASICCD::TimerHit()
 
                 if ( (errCode = ASIGetExpStatus(m_camInfo->CameraID, &status)) != ASI_SUCCESS)
                 {
-                    DEBUGF(INDI::Logger::DBG_DEBUG, "ASIGetExpStatus error (%d)", errCode);
+                    DEBUGF(INDI::Logger::DBG_ERROR, "ASIGetExpStatus error (%d), status = %d, exposureStatusTimeout = %d", errCode, status, exposureStatusTimeout);
 
                     // Maximum 10 times to try this
                     if (++exposureStatusTimeout >= 10)
@@ -1083,7 +1083,7 @@ void ASICCD::TimerHit()
                             return;
                         }
 
-                        DEBUGF(INDI::Logger::DBG_DEBUG, "ASIGetExpStatus failed (%d). Restarting exposure...", errCode);
+                        DEBUGF(INDI::Logger::DBG_ERROR, "ASIGetExpStatus failed (%d). Restarting exposure...", errCode);
                         InExposure = false;
                         usleep(100000);
                         StartExposure(ExposureRequest);
